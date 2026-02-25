@@ -14,25 +14,6 @@ public class War extends CardGame {
         // Ensure the game is initialized and cards are dealt for War
         resetGame();
     }
-
-    @Override
-    protected void createDeck() {
-        // Create standard 52-card deck
-        String[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-        String[] values = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        for (String suit : suits) {
-            for (String value : values) {
-                deck.add(createCard(suit, value));
-            }
-        }
-    }
-
-    private Card createCard(String suit, String value) {
-        Card card = new Card(value, suit); 
-        card.suit = suit;
-        card.value = value;
-        return card;
-    }
     
     //Create method to deal cards//
     public void dealChoices(int count) {
@@ -52,7 +33,8 @@ public class War extends CardGame {
 
     //Scoring mech using compare//
     public int compareValues(Card a, Card b) {
-        String[] ranks = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"};
+        // Match the values produced by the default deck ("2".."10","J","Q","K","A").
+        String[] ranks = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
         int ra = -1, rb = -1;
         for (int i = 0; i < ranks.length; i++) {
             if (ranks[i].equals(a.value)) ra = i;
