@@ -2,7 +2,7 @@ import processing.core.PApplet;
 
 public class App extends PApplet {
 
-    CardGame cardGame = new Uno();
+    CardGame cardGame = new War();
     private int timer;
 
     public static void main(String[] args) {
@@ -31,12 +31,14 @@ public class App extends PApplet {
             }
         }
         
-        // Draw draw button
-        fill(200);
-        cardGame.drawButton.draw(this);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        text("Draw", cardGame.drawButton.x + cardGame.drawButton.width / 2, cardGame.drawButton.y + cardGame.drawButton.height / 2);
+        // Draw draw button if the current game uses it
+        if (cardGame.hasDrawButton()) {
+            fill(200);
+            cardGame.drawButton.draw(this);
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text("Draw", cardGame.drawButton.x + cardGame.drawButton.width / 2, cardGame.drawButton.y + cardGame.drawButton.height / 2);
+        }
 
         // Display current player
         fill(0);
@@ -51,7 +53,8 @@ public class App extends PApplet {
             cardGame.getLastPlayedCard().setPosition(width / 2 - 40, height / 2 - 60, 80, 120);
             cardGame.getLastPlayedCard().draw(this);
         }
-        if (cardGame.getCurrentPlayer() == "Player Two") {
+        // For games that use the draw-button turn flow, show computer thinking and auto-act.
+        if (cardGame.hasDrawButton() && cardGame.getCurrentPlayer().equals("Player Two")) {
             fill(0);
             textSize(16);
             text("Computer is thinking...", width / 2, height / 2 + 80);
@@ -63,12 +66,24 @@ public class App extends PApplet {
         }
 
         cardGame.drawChoices(this);
+
+        // If this is a War game, draw the computer's last played card beside the player's last played card
+        if (cardGame instanceof War) {
+            War war = (War) cardGame;
+            Card comp = war.getLastComputerCard();
+            if (comp != null) {
+                comp.setPosition(width / 2 + 60, height / 2 - 60, 80, 120);
+                comp.draw(this);
+            }
+        }
     }
 
     
     @Override
     public void mousePressed() {
-        cardGame.handleDrawButtonClick(mouseX, mouseY);
+        if (cardGame.hasDrawButton()) {
+            cardGame.handleDrawButtonClick(mouseX, mouseY);
+        }
         cardGame.handleCardClick(mouseX, mouseY);
     }
 

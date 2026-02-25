@@ -29,6 +29,11 @@ public class CardGame {
         dealCards(6);
     }
 
+    // Whether this game uses the draw button UI. Subclasses (like War) can override.
+    public boolean hasDrawButton() {
+        return true;
+    }
+
     protected void initializeGame() {
         // Initialize draw button
         drawButton = new ClickableRectangle();
