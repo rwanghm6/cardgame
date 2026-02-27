@@ -45,9 +45,6 @@ public class App extends PApplet {
         textSize(16);
         text("Current Player: " + cardGame.getCurrentPlayer(), width / 2, 20);
 
-        // Display deck size
-        text("Deck Size: " + cardGame.getDeckSize(), width / 2,
-                height - 20);
         // Display last played card
         if (cardGame.getLastPlayedCard() != null) {
             cardGame.getLastPlayedCard().setPosition(width / 2 - 40, height / 2 - 60, 80, 120);
@@ -121,6 +118,6 @@ public class App extends PApplet {
 
         text("Your score: " + cardGame.getPlayerScore(), textX, startY);
         text("Their score: " + cardGame.getComputerScore(), textX, startY + lineHeight);
-        text("Cards left: " + (cardGame.getPlayerCardsRemaining()-1), textX, startY + lineHeight * 2);
+        text("Cards left: " + cardGame.getPlayerCardsRemaining(), textX, startY + lineHeight * 2);
     }
 }

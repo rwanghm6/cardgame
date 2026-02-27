@@ -145,10 +145,7 @@ public class War extends CardGame {
         dealFullDeckSplit();
     }
 
-    /**
-     * Shuffle and deal the entire deck evenly between the two players.
-     * Second player's cards are turned (facedown) to simulate opponent hand.
-     */
+    //deal
     public void dealFullDeckSplit() {
         playerChoices.clear();
         computerChoices.clear();
@@ -167,11 +164,11 @@ public class War extends CardGame {
             playerTwoHand.addCard(c);
         }
 
-        // position cards for rendering
+        // position card
         playerOneHand.positionCards(50, 450, 80, 120, 20);
         playerTwoHand.positionCards(50, 50, 80, 120, 20);
 
-        // mirror hands into choice lists (the UI may choose how many to show)
+       
         for (int i = 0; i < playerOneHand.getSize(); i++) {
             playerChoices.add(playerOneHand.getCard(i));
         }

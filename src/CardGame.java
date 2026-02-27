@@ -29,7 +29,7 @@ public class CardGame {
         dealCards(6);
     }
 
-    // Whether this game uses the draw button UI. Subclasses (like War) can override.
+    // Edit to make it so that uno still works but war can override
     public boolean hasDrawButton() {
         return true;
     }
@@ -199,7 +199,7 @@ public class CardGame {
         // if you want to draw additional things (like Uno's wild color choices)
     }
 
-    // Score-related getters
+    // Score-related to be overriden
     public int getPlayerScore() {
         return 0; // Base implementation, override in subclasses
     }
