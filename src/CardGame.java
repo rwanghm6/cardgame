@@ -198,4 +198,21 @@ public class CardGame {
         // this method is available for overriding
         // if you want to draw additional things (like Uno's wild color choices)
     }
+
+    // Score-related getters
+    public int getPlayerScore() {
+        return 0; // Base implementation, override in subclasses
+    }
+
+    public int getComputerScore() {
+        return 0; // Base implementation, override in subclasses
+    }
+
+    public int getPlayerCardsRemaining() {
+        return playerOneHand.getSize();
+    }
+
+    public int getComputerCardsRemaining() {
+        return playerTwoHand.getSize();
+    }
 }

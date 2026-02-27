@@ -76,6 +76,9 @@ public class App extends PApplet {
                 comp.draw(this);
             }
         }
+
+        // Draw score panel
+        drawScorePanel();
     }
 
     
@@ -87,4 +90,37 @@ public class App extends PApplet {
         cardGame.handleCardClick(mouseX, mouseY);
     }
 
+    private void drawScorePanel() {
+        //dimensions and position
+        int panelX = 10;
+        int panelY = 10;
+        int panelWidth = 150;
+        int panelHeight = 110;
+
+        //background
+        fill(220, 240, 255);
+        stroke(100);
+        strokeWeight(2);
+        rect(panelX, panelY, panelWidth, panelHeight, 8);
+
+        //border
+        noFill();
+        stroke(50);
+        strokeWeight(2);
+        rect(panelX, panelY, panelWidth, panelHeight, 8);
+
+        //text
+        fill(0);
+        textAlign(LEFT);
+        textSize(13);
+        textFont(createFont("Arial", 13, true));
+
+        int textX = panelX + 12;
+        int lineHeight = 25;
+        int startY = panelY + 20;
+
+        text("Your score: " + cardGame.getPlayerScore(), textX, startY);
+        text("Their score: " + cardGame.getComputerScore(), textX, startY + lineHeight);
+        text("Cards left: " + cardGame.getPlayerCardsRemaining(), textX, startY + lineHeight * 2);
+    }
 }
