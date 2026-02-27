@@ -80,6 +80,7 @@ public class War extends CardGame {
         // remember played cards for UI
         lastPlayedCard = p;
         lastComputerCard = c;
+        lastComputerCard.setTurned(false);
 
         int cmp = compareValues(p, c);
         if (cmp > 0) playerScore++;
