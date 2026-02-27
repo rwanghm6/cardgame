@@ -121,6 +121,6 @@ public class App extends PApplet {
 
         text("Your score: " + cardGame.getPlayerScore(), textX, startY);
         text("Their score: " + cardGame.getComputerScore(), textX, startY + lineHeight);
-        text("Cards left: " + cardGame.getPlayerCardsRemaining(), textX, startY + lineHeight * 2);
+        text("Cards left: " + (cardGame.getPlayerCardsRemaining()-1), textX, startY + lineHeight * 2);
     }
 }
