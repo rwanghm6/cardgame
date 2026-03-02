@@ -4,6 +4,7 @@ public class App extends PApplet {
 
     CardGame cardGame = new War();
     private int timer;
+    private ClickableRectangle playAgainButton;  // UI element to restart the game
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -11,6 +12,16 @@ public class App extends PApplet {
     @Override
     public void settings() {
         size(600, 600);   
+    }
+
+    @Override
+    public void setup() {
+        // create the play-again button after size is known
+        playAgainButton = new ClickableRectangle();
+        playAgainButton.x = width - 120;
+        playAgainButton.y = 10;
+        playAgainButton.width = 100;
+        playAgainButton.height = 30;
     }
 
     @Override
@@ -76,11 +87,20 @@ public class App extends PApplet {
 
         // Draw score panel
         drawScorePanel();
+
+        // Draw play-again button
+        drawPlayAgainButton();
     }
 
     
     @Override
     public void mousePressed() {
+        // check play again first so it takes priority
+        if (playAgainButton != null && playAgainButton.isClicked(mouseX, mouseY)) {
+            cardGame.resetGame();
+            return;
+        }
+
         if (cardGame.hasDrawButton()) {
             cardGame.handleDrawButtonClick(mouseX, mouseY);
         }
@@ -119,5 +139,20 @@ public class App extends PApplet {
         text("Your score: " + cardGame.getPlayerScore(), textX, startY);
         text("Their score: " + cardGame.getComputerScore(), textX, startY + lineHeight);
         text("Cards left: " + cardGame.getPlayerCardsRemaining(), textX, startY + lineHeight * 2);
+    }
+
+    private void drawPlayAgainButton() {
+        if (playAgainButton == null) return;
+
+        fill(200, 220, 200);
+        stroke(80);
+        strokeWeight(2);
+        rect(playAgainButton.x, playAgainButton.y, playAgainButton.width, playAgainButton.height, 6);
+
+        fill(0);
+        textSize(14);
+        textAlign(CENTER, CENTER);
+        text("Play Again", playAgainButton.x + playAgainButton.width / 2,
+                playAgainButton.y + playAgainButton.height / 2);
     }
 }

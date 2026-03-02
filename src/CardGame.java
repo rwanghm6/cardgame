@@ -198,7 +198,18 @@ public class CardGame {
         // this method is available for overriding
         // if you want to draw additional things (like Uno's wild color choices)
     }
+    // Allows resetting the game state; subclasses may override for custom behavior
+    public void resetGame() {
+        // default behavior: reinitialize and deal a fresh hand of 6 cards
+        // clear existing data
+        if (deck != null) deck.clear();
+        if (discardPile != null) discardPile.clear();
+        if (playerOneHand != null && playerOneHand.getCards() != null) playerOneHand.getCards().clear();
+        if (playerTwoHand != null && playerTwoHand.getCards() != null) playerTwoHand.getCards().clear();
 
+        initializeGame();
+        dealCards(6);
+    }
     // Score-related to be overriden
     public int getPlayerScore() {
         return 0; // Base implementation, override in subclasses
