@@ -226,4 +226,13 @@ public class CardGame {
     public int getComputerCardsRemaining() {
         return playerTwoHand.getSize();
     }
+
+    /**
+     * Determines if the game has reached an end state.
+     * Subclasses should override with their own logic; default is always false so
+     * non‑scoring games aren’t considered finished.
+     */
+    public boolean isGameOver() {
+        return false;
+    }
 }

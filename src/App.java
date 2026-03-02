@@ -5,6 +5,9 @@ public class App extends PApplet {
     CardGame cardGame = new War();
     private int timer;
     private ClickableRectangle playAgainButton;  // UI element to restart the game
+    private boolean endScreenStarted = false;      // has the end-game timer started?
+    private boolean showEndScreen = false;         // whether overlay is visible
+    private long endStartTime = 0;                 // millis when game ended
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -27,6 +30,16 @@ public class App extends PApplet {
     @Override
     public void draw() {
         background(255);
+        // check for game over and manage end-screen timing
+        if (cardGame.isGameOver()) {
+            if (!endScreenStarted) {
+                endStartTime = millis();
+                endScreenStarted = true;
+            } else if (!showEndScreen && millis() - endStartTime >= 2000) {
+                showEndScreen = true;
+            }
+        }
+
         // Draw player hands
         for (int i = 0; i < cardGame.playerOneHand.getSize(); i++) {
             Card card = cardGame.playerOneHand.getCard(i);
@@ -90,6 +103,21 @@ public class App extends PApplet {
 
         // Draw play-again button
         drawPlayAgainButton();
+
+        // Calculating score screeen
+        if (cardGame.isGameOver() && endScreenStarted && !showEndScreen) {
+            fill(255);
+            rect(0, 0, width, height);
+            fill(0);
+            textSize(36);
+            textAlign(CENTER, CENTER);
+            text("Calculating", width / 2, height / 2);
+        }
+
+        // if end screen should be shown, render the overlay last
+        if (showEndScreen) {
+            drawEndScreen();
+        }
     }
 
     
@@ -98,6 +126,9 @@ public class App extends PApplet {
         // check play again first so it takes priority
         if (playAgainButton != null && playAgainButton.isClicked(mouseX, mouseY)) {
             cardGame.resetGame();
+            // clear any end-screen state
+            endScreenStarted = false;
+            showEndScreen = false;
             return;
         }
 
@@ -154,5 +185,27 @@ public class App extends PApplet {
         textAlign(CENTER, CENTER);
         text("Play Again", playAgainButton.x + playAgainButton.width / 2,
                 playAgainButton.y + playAgainButton.height / 2);
+    }
+
+    private void drawEndScreen() {
+        // semi-transparent dark overlay
+        fill(0, 0, 0, 150);
+        rect(0, 0, width, height);
+
+        // determine scores and outcome
+        int playerScore = cardGame.getPlayerScore();
+        int compScore = cardGame.getComputerScore();
+        String scoreText = playerScore + " - " + compScore;
+        String result;
+        if (playerScore > compScore) result = "You win!";
+        else if (playerScore < compScore) result = "You lose!";
+        else result = "It's a tie!";
+
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textSize(32);
+        text(scoreText, width / 2, height / 2 - 20);
+        textSize(24);
+        text(result, width / 2, height / 2 + 30);
     }
 }

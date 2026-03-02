@@ -145,6 +145,12 @@ public class War extends CardGame {
         dealFullDeckSplit();
     }
 
+    @Override
+    public boolean isGameOver() {
+        // game ends when neither side has any cards and the deck is empty
+        return playerOneHand.getSize() == 0 && playerTwoHand.getSize() == 0 && getDeckSize() == 0;
+    }
+
     //deal
     public void dealFullDeckSplit() {
         playerChoices.clear();
